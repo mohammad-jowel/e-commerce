@@ -27,7 +27,7 @@ const Home =  () =>{
     }
 
     return (
-      <div className='text-xl font-medium text-white text-center py-5'>
+      <div className='text-xl font-medium text-slate-800 text-center py-5'>
         <p className='mb-4 text-3xl'>Home</p>
         {!user ?
            <p>Not logged in</p>:

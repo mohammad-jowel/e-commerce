@@ -8,21 +8,21 @@ import Login from "./comps/Login";
 import Nopage from "./comps/Nopage";
 
 const App = () => {
-    
-    return (
-      <UserProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="singup/" element={<Singup />} />
-              <Route path="login/" element={<Login />} />
-              <Route path="*" element={<Nopage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </UserProvider>
-    );
+  return (
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="singup" element={<Singup />} />
+          <Route path="login" element={<Login />} />
+          
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="*" element={<Nopage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
+  );
 }
 
 export default App;

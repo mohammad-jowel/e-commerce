@@ -12,12 +12,12 @@ const Login = () => {
             }
         }, [user])
         
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (username.length < 1) {
+        if (email.length < 1) {
             console.log('Username is requried!');
             return;
         }
@@ -27,7 +27,7 @@ const Login = () => {
         }
 
         const userInfo = {
-            username: username,
+            email: email,
             password: password
         };
 
@@ -48,8 +48,8 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input type="text" placeholder="Username" value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        <input type="text" placeholder="Username" value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"/>
                     </div>
 

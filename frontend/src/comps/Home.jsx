@@ -33,7 +33,7 @@ const Home =  () =>{
            <p>Not logged in</p>:
 
           <>
-            <p>Logged in is as {user.username}</p>
+            <p>Logged in is as {user.name}</p>
             <h3>All Users</h3>
             {user && products.map(product => (
               <li key={product.id}>{product.name}</li>

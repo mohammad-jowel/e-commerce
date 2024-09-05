@@ -12,15 +12,20 @@ const Singup = () => {
         }
     }, [user])
 
-    const [username, setUsername] = useState('');
+    const [firstName, setFirstname] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(username.length < 1){
-            console.log('Username is required!');
+        if(firstName.length < 1){
+            console.log('First Name is required!');
+            return;
+        }
+        if(lastName.length < 1){
+            console.log('Last Name is required!');
             return;
         }
         if(email.length < 5){
@@ -37,7 +42,8 @@ const Singup = () => {
         }
 
         const userInfo = {
-            'username': username,
+            'first_name': firstName,
+            'last_name': lastName,
             'email': email,
             'password': password
         };
@@ -59,8 +65,20 @@ const Singup = () => {
                           </svg>
                       </span>
 
-                      <input type="text" placeholder="Username" value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      <input type="text" placeholder="First name" value={firstName}
+                      onChange={(e) => setFirstname(e.target.value)}
+                      className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"/>
+                  </div>
+
+                  <div className="relative flex items-center mt-4">
+                      <span className="absolute">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                          </svg>
+                      </span>
+
+                      <input type="text" placeholder="Last name" value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"/>
                   </div>
 

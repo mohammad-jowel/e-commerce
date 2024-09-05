@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
-from .models import User
+from .models import User, Product, Cart
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -23,12 +23,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def home(request):
-    users = User.objects.all()
-    return Response([user.serialize() for user in users])
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -69,3 +63,17 @@ def logout(request):
         return Response(status=status.HTTP_205_RESET_CONTENT)
     except Exception as e:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['GET'])
+def home(request):
+    users = User.objects.all()
+    print(request.user.is_authenticated)
+    return Response([user.serialize() for user in users])
+
+
+@api_view(['GET'])
+def get_products(request):
+    products = Product.objects.all()
+    products = [p.serialze() for p in products]
+    return Response(products, status=status.HTTP_200_OK)

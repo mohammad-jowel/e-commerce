@@ -4,7 +4,7 @@ import { UserContext } from '../UserContext';
 
 const Home =  () =>{
     const { authTokens, user } = useContext(UserContext);
-    const [users, setUsers] = useState([]);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
       if(authTokens) {
@@ -13,13 +13,13 @@ const Home =  () =>{
     }, [])
     
     const getUser = () => {
-      axios.get('http://localhost:8000/api/home', {
+      axios.get('http://localhost:8000/api/get_products', {
         headers: {
            'Content-Type': 'application/json',
            'Authorization': `Bearer ${authTokens.access}`
         }})
         .then(response => {
-          setUsers(response.data);
+          setProducts(response.data);
         })
         .catch(error => {
           console.log(error);
@@ -35,8 +35,8 @@ const Home =  () =>{
           <>
             <p>Logged in is as {user.username}</p>
             <h3>All Users</h3>
-            {user && users.map(user => (
-              <li key={user.id}>{user.username}</li>
+            {user && products.map(product => (
+              <li key={product.id}>{product.name}</li>
             ))}
           </>
           

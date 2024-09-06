@@ -44,13 +44,25 @@ const Layout = () => {
                 </Link>
             </div>
             <div class="flex items-center">
-                <div class="flex items-center bg-gray-500 rounded-full w-8 h-8">
-                <svg className="" xmlns="http://www.w3.org/2000/svg" width="32" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                {user?
+                <>
+                <div class="flex items-center bg-gray-500 rounded-full w-11 h-11">
+                <svg className="" xmlns="http://www.w3.org/2000/svg" width="43" height="43" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                 </svg>
                 </div>
-                </div>
+                <span className="font-medium ml-2">
+                    {user.name}
+                    <p className="text-sm font-normal">{user.email}</p>
+                </span>
+                </> : 
+                <span className="text-slate-800 font-medium">
+                    Not Logged In
+                </span>
+                }
+                
             </div>
+        </div>
         </div>
         </nav>
         
@@ -88,6 +100,7 @@ const Layout = () => {
             </ul>
         </div>
         </aside>
+
         <div class="bg-white min-h-svh max-w-full p-4 sm:ml-64">
         <div class="mx-auto p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14">
             <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-4">

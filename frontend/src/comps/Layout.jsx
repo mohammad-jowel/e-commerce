@@ -22,9 +22,9 @@ const Layout = () => {
 
     return (
         <>
-        <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
-        <div class="mx-auto max-w-screen-2xl px-3 py-3 lg:px-5 lg:pl-3">
-            <div class="flex items-center justify-between">
+        <nav class="top-0 w-full border-b bg-white backdrop-blur-xl">
+        <div class="mx-auto max-w-screen-2xl px-3  lg:px-5 lg:pl-3">
+            <div class="w-full flex flex-wrap items-center justify-between mx-auto p-4">
             <div class="flex items-center justify-start rtl:justify-end">
                 <button onClick={toggleNav} type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                     <span class="sr-only">Open sidebar</span>
@@ -43,15 +43,57 @@ const Layout = () => {
                 </svg>
                 </Link>
             </div>
-            <div class="flex items-center">
+            <div className={`w-full md:block md:w-auto ${isOpen ? 'block' : 'hidden'}`}>
+                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-6 lg:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
+                <li>
+                    <Link to="/" onClick={toggleNav} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                    Products
+                    </Link>
+                </li>
+                {user ?
+                    <>
+                     
+                    <li>
+                        <Link to="/" onClick={logOut} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                        Logout
+                        </Link>
+                    </li>
+                    </> :
+                    <>
+                    <li>
+                        <Link to="/login" onClick={toggleNav} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                        Login
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/singup" onClick={toggleNav} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                        Singup
+                        </Link>
+                    </li>
+                    </>
+                }
+               
+                </ul>
+            </div>
+            <div class={`flex space-x-2 items-center pt-4 md:pt-0 md:flex ${isOpen ? 'block' : 'hidden'}`}>
                 {user?
                 <>
-                <div class="flex items-center bg-gray-500 rounded-full w-11 h-11">
-                <svg className="" xmlns="http://www.w3.org/2000/svg" width="43" height="43" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                <Link to="/" class="block py-2 items-center text-gray-800 hover:text-">
+                <svg className="size-8" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
+                    <g>
+                    <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M25.8716,28.9377H8.0341c-1.0475,0-1.9292-0.7839-2.0519-1.8242L4.3781,13.7176
+                    c-0.1448-1.2284,0.8149-2.308,2.0519-2.308h21.0458c1.237,0,2.1967,1.0796,2.0519,2.308l-1.6042,13.3959
+                    C27.8008,28.1538,26.9191,28.9377,25.8716,28.9377z"></path>
+                    <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M11.3279,15.4096v-6.515c0-3.1066,2.5184-5.625,5.625-5.625h0c3.1066,0,5.625,2.5184,5.625,5.625v6.515"></path>
+                    </g>
+                </svg>
+                </Link>
+                <div class="flex items-center bg-gray-500 rounded-full w-8 h-8">
+                <svg className="" xmlns="http://www.w3.org/2000/svg" width="33" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                 </svg>
                 </div>
-                <span className="font-medium ml-2">
+                <span className="text-sm font-medium ml-2">
                     {user.name}
                     <p className="text-sm font-normal">{user.email}</p>
                 </span>
@@ -63,73 +105,12 @@ const Layout = () => {
                 
             </div>
         </div>
+
+        
         </div>
         </nav>
-        
-        <aside id="logo-sidebar" class={`fixed top-10 left-0 z-40 w-64 h-screen pt-20 transition-transform ${isOpen? "" : "-translate-x-full"} bg-white border-r border-gray-300 sm:translate-x-0 " aria-label="Sidebar"`}>
-        <div class="h-full pl-10 px-3 pb-4 overflow-y-auto bg-white">
-            <ul class="space-y-2 font-medium">
-                
-                <li>
-                    <Link to="/" onClick={toggleNav} class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-800 hover:text-gray-100 group">
-                    <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
-                    </Link>
-                </li>
-                {!user?
-                <>
-                    <li>
-                        <Link to="/login" onClick={toggleNav} class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-800 hover:text-gray-100 group">
-                        <span class="flex-1 ms-3 whitespace-nowrap">Login</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/singup" onClick={toggleNav} class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-800 hover:text-gray-100 group">
-                        <span class="flex-1 ms-3 whitespace-nowrap">Signup</span>
-                        </Link>
-                    </li>
-                </> : 
-                <>
-                <li>
-                    <Link type="button" onClick={logOut} class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-800 hover:text-gray-100 group">
-                    <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
-                    </Link>
-                </li>
-                </>
-                }
-                
-            </ul>
-        </div>
-        </aside>
 
-        <div class="bg-white min-h-svh max-w-full p-4 sm:ml-64">
-        <div class="mx-auto p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14">
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-                    <p class="text-2xl text-gray-400">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                    </p>
-                </div>
-                <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-                    <p class="text-2xl text-gray-400">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                    </p>
-                </div>
-                <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-                    <p class="text-2xl text-gray-400">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                    </p>
-                </div>
-            </div>
-            <Outlet />
-            
-        </div>
-        </div>
+        <Outlet/>
     </>
     );
 };

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from '../UserContext';
 
 
-const Singup = () => {
+const Signup = () => {
     const { user, SingUp } = useContext(UserContext);
     const navigate = useNavigate();
     useEffect(() => {
@@ -136,4 +136,4 @@ const Singup = () => {
     )
 }
 
-export default Singup;
+export default Signup;

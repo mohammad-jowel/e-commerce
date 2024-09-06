@@ -6,7 +6,6 @@ import Fotter from './Fotter';
 
 const Layout = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [userMenu, setUserMenu] = useState(false)
     const { user, LogOut } = useContext(UserContext);
 
 
@@ -22,17 +21,17 @@ const Layout = () => {
 
     return (
         <>
-        <nav class="top-0 w-full border-b bg-white backdrop-blur-xl">
-        <div class="mx-auto max-w-screen-2xl px-3  lg:px-5 lg:pl-3">
-            <div class="w-full flex flex-wrap items-center justify-between mx-auto p-4">
-            <div class="flex items-center justify-start rtl:justify-end">
-                <button onClick={toggleNav} type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                    <span class="sr-only">Open sidebar</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        <nav className="top-0 w-full border-b bg-white backdrop-blur-xl">
+        <div className="mx-auto max-w-screen-2xl px-3  lg:px-5 lg:pl-3">
+            <div className="w-full flex flex-wrap items-center justify-between mx-auto p-2 md:p-4">
+            <div className="flex items-center justify-start rtl:justify-end">
+                <button onClick={toggleNav} type="button" className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                    <span className="sr-only">Open sidebar</span>
+                    <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                     </svg>
                 </button>
-                <Link to="/" class="flex items-center ms-2 md:me-24" >
+                <Link to="/" className="flex items-center ms-2 md:me-24" >
                 <svg className="size-10" width="89" height="85" viewBox="0 0 89 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="89" height="85" rx="42" fill="#1E99F5"/>
                     <path d="M39.7793 39.959L41.0273 38.5527H42.8906L45.1055 27.3555C42.7031 27.3555 40.752 28.0059 39.252 29.3066C37.7637 30.5957 37.0195 32.2832 37.0195 34.3691L37.0371 34.7559L33.6094 36.4082C33.9141 32.8105 35.3086 30.1738 37.793 28.498C40.2891 26.8223 44.0508 25.9844 49.0781 25.9844H59.2207L57.6387 30.959H56.5137C56.666 30.4902 56.7422 30.0273 56.7422 29.5703C56.7422 28.0469 54.3457 27.2852 49.5527 27.2852H48.7969L46.5645 38.5527H54.2285L52.4883 40.3457C50.6133 40.0879 48.832 39.959 47.1445 39.959H46.2832L45.2637 45.1094C44.4082 49.4453 42.75 52.9082 40.2891 55.498C37.8398 58.0879 34.9863 59.3828 31.7285 59.3828C29.9707 59.3828 28.4004 58.7207 27.0176 57.3965L29.6016 54.7598C30.5273 56.6816 32.0156 57.6426 34.0664 57.6426C35.9414 57.6426 37.4121 56.793 38.4785 55.0938C39.5566 53.4062 40.5234 50.4121 41.3789 46.1113L42.6094 39.959H39.7793Z" fill="black"/>
@@ -44,9 +43,9 @@ const Layout = () => {
                 </Link>
             </div>
             <div className={`w-full md:block md:w-auto ${isOpen ? 'block' : 'hidden'}`}>
-                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-6 lg:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
+                <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-6 lg:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
                 <li>
-                    <Link to="/" onClick={toggleNav} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                    <Link to="/" onClick={toggleNav} className="block py-2 items-center text-gray-900 hover:text-gray-600">
                     Products
                     </Link>
                 </li>
@@ -54,19 +53,19 @@ const Layout = () => {
                     <>
                      
                     <li>
-                        <Link to="/" onClick={logOut} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                        <Link to="/" onClick={logOut} className="block py-2 items-center text-gray-900 hover:text-gray-600">
                         Logout
                         </Link>
                     </li>
                     </> :
                     <>
                     <li>
-                        <Link to="/login" onClick={toggleNav} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                        <Link to="/login" onClick={toggleNav} className="block py-2 items-center text-gray-900 hover:text-gray-600">
                         Login
                         </Link>
                     </li>
                     <li>
-                        <Link to="/singup" onClick={toggleNav} class="block py-2 items-center text-gray-900 hover:text-gray-600">
+                        <Link to="/singup" onClick={toggleNav} className="block py-2 items-center text-gray-900 hover:text-gray-600">
                         Singup
                         </Link>
                     </li>
@@ -75,21 +74,21 @@ const Layout = () => {
                
                 </ul>
             </div>
-            <div class={`flex space-x-2 items-center pt-4 md:pt-0 md:flex ${isOpen ? 'block' : 'hidden'}`}>
+            <div className={`flex space-x-2 items-center pt-4 md:pt-0 md:flex ${isOpen ? 'block' : 'hidden'}`}>
                 {user?
                 <>
-                <Link to="/" class="block py-2 items-center text-gray-800 hover:text-">
-                <svg className="size-8" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
+                <Link to="/checkout" className="block py-2 items-center text-gray-800 hover:text-">
+                <svg className="size-8" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
                     <g>
-                    <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M25.8716,28.9377H8.0341c-1.0475,0-1.9292-0.7839-2.0519-1.8242L4.3781,13.7176
+                    <path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M25.8716,28.9377H8.0341c-1.0475,0-1.9292-0.7839-2.0519-1.8242L4.3781,13.7176
                     c-0.1448-1.2284,0.8149-2.308,2.0519-2.308h21.0458c1.237,0,2.1967,1.0796,2.0519,2.308l-1.6042,13.3959
                     C27.8008,28.1538,26.9191,28.9377,25.8716,28.9377z"></path>
-                    <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M11.3279,15.4096v-6.515c0-3.1066,2.5184-5.625,5.625-5.625h0c3.1066,0,5.625,2.5184,5.625,5.625v6.515"></path>
+                    <path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M11.3279,15.4096v-6.515c0-3.1066,2.5184-5.625,5.625-5.625h0c3.1066,0,5.625,2.5184,5.625,5.625v6.515"></path>
                     </g>
                 </svg>
                 </Link>
-                <div class="flex items-center bg-gray-500 rounded-full w-8 h-8">
-                <svg className="" xmlns="http://www.w3.org/2000/svg" width="33" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                <div className="flex items-center bg-gray-500 rounded-full w-8 h-8">
+                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="30" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                 </svg>
                 </div>
@@ -111,6 +110,7 @@ const Layout = () => {
         </nav>
 
         <Outlet/>
+        <Fotter />
     </>
     );
 };

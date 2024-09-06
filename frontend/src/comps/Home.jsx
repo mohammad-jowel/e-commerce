@@ -1,25 +1,30 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import { UserContext } from '../UserContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Pagination from './Pagination';
 
-const Home =  () =>{
+const Home = () => {
+    const navigate = useNavigate();
     const { authTokens, user } = useContext(UserContext);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-      if(authTokens) {
-        getUser();
-      }
-    }, [])
+        if (!user) {
+            navigate('login');
+        } else {
+            getProducts();
+        }
+    }, []);
     
-    const getUser = () => {
+    const getProducts = () => {
       axios.get('http://localhost:8000/api/get_products', {
         headers: {
            'Content-Type': 'application/json',
            'Authorization': `Bearer ${authTokens.access}`
         }})
         .then(response => {
+          console.log(response.data);
           setProducts(response.data);
         })
         .catch(error => {
@@ -27,76 +32,81 @@ const Home =  () =>{
         });
     }
 
+    const addToCart = (productId) => {
+        setProducts(prevProducts =>
+            prevProducts.map(product =>
+              product.id === productId ? { ...product, cart: true } : product
+            )
+        );
+        axios.post('http://localhost:8000/api/add_to_cart', {
+            "product_id": productId
+            }, {
+            headers: {
+               'Content-Type': 'application/json',
+               'Authorization': `Bearer ${authTokens.access}`
+            }})
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+    }
+
     return (
-      <>
-      <aside id="logo-sidebar" class="fixed top-15 left-0 z-40 w-64 h-screen pt-8 transition-transform -translate-x-full sm:translate-x-0 " aria-label="Sidebar">
-        <div class="h-full pl-10 px-3 pb-4 overflow-y-auto bg-white">
-            <ul class="space-y-2 font-medium">
-                <li>
-                    <Link to="/" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-800 hover:text-gray-100 group">
-                    <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
-                    </Link>
-                </li>
-            </ul>
-        </div>
-        </aside>
-
-        <div class="border-l bg-white min-h-svh max-w-full p-4 sm:ml-64">
-        <div class="mx-auto p-4 border-2 border-gray-200 border-dashed rounded-lg mt-2">
-            <div class="grid grid-cols-2 lg:grid-cols-4  gap-4 lg:gap-8 mb-4">
-
-            <div class="max-w-fit bg-white border border-gray-200 rounded-lg shadow">
-                <img class="p-4 rounded-t-lg" src="https://flowbite.com/docs/images/products/apple-watch.png" alt="product image" />
-              <div class="px-5 pb-5">
-                  <a href="#">
-                      <h5 class="text-base font-semibold tracking-tight text-gray-900 ">Apple Watch Series 7 GPS, Aluminium Case, Starlight Sport</h5>
-                  </a>
-                  
-                  <div class="flex items-center space-x-2">
-                      <span class="text-base font-bold text-gray-900">$599</span>
-                      <span class="text-base line-through font-bold text-gray-500">$700</span>
-                      <span class="text-base font-bold text-red-400">20% OFF</span>
-                  </div>
-                  
-                  <button type="button" class="flex items-center mt-2 w-full text-white focus:outline-none focus:ring-4 font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-                    <div className="mx-auto flex items-center space-x-2">
-                      <svg className="size-5" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
-                        <g>
-                          <path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M25.8716,28.9377H8.0341c-1.0475,0-1.9292-0.7839-2.0519-1.8242L4.3781,13.7176
-                          c-0.1448-1.2284,0.8149-2.308,2.0519-2.308h21.0458c1.237,0,2.1967,1.0796,2.0519,2.308l-1.6042,13.3959
-                          C27.8008,28.1538,26.9191,28.9377,25.8716,28.9377z"></path>
-                          <path fill="none" stroke="#ffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M11.3279,15.4096v-6.515c0-3.1066,2.5184-5.625,5.625-5.625h0c3.1066,0,5.625,2.5184,5.625,5.625v6.515"></path>
-                        </g>
-                      </svg>
-                      <span>
-                        Add to cart
-                      </span>
+        <div className="flex">
+            <div className="hidden md:block w-1/5 p-4 md:pl-10 md:pt-7">
+                <ul className="space-y-2 font-medium">
+                    <li>
+                        <Link to="/" className="flex items-center p-2 text-gray-950 rounded-md hover:bg-slate-900 hover:text-gray-100 group">
+                        <span className="flex-1 ms-3 whitespace-nowrap">Products</span>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            <div className="border-l w-full p-4 pt-7">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:grid-cols-4 lg:gap-6">
+                {products.map((product) => (
+                    <div key={product.id} className="border p-4 rounded-lg">
+                        <img src={product.image_url} alt={product.name} className="w-full object-cover mb-4"/>
+                        <h2 className="text-lg font-bold">{product.name}</h2>
+                        <div className="text-lg font-bold flex space-x-2">
+                            <p className="text-slate-900">€{product.price}</p>
+                            <span className="line-through text-gray-500">€{product.old_price}</span> 
+                            <span className="text-red-500">{product.discount}% OFF</span>
+                        </div>
+                        <p className="text-sm text-gray-500 mb-4">
+                         {product.description}
+                        </p>
+                        <button 
+                            type="button" 
+                            disabled={product.cart}
+                            onClick={() => addToCart(product.id)}
+                            className="flex items-center mt-2 w-full text-white focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 bg-gray-900 hover:bg-gray-800 hover:text-gray-300 border-gray-700 disabled:bg-gray-800 disabled:text-gray-300"
+                        >
+                            <div className="mx-auto flex items-center space-x-2">
+                                <svg className="size-5" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
+                                    <g>
+                                        <path fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M25.8716,28.9377H8.0341c-1.0475,0-1.9292-0.7839-2.0519-1.8242L4.3781,13.7176
+                                        c-0.1448-1.2284,0.8149-2.308,2.0519-2.308h21.0458c1.237,0,2.1967,1.0796,2.0519,2.308l-1.6042,13.3959
+                                        C27.8008,28.1538,26.9191,28.9377,25.8716,28.9377z"></path>
+                                        <path fill="none" stroke="#ffff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M11.3279,15.4096v-6.515c0-3.1066,2.5184-5.625,5.625-5.625h0c3.1066,0,5.625,2.5184,5.625,5.625v6.515"></path>
+                                    </g>
+                                </svg>
+                                <span>
+                                    {product.cart ? 'Added to cart' : 'Add to cart'}
+                                </span>
+                            </div>
+                        </button>
                     </div>
-                  </button>
-              </div>
-          </div>
-
-                <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-                    <p class="text-2xl text-gray-400">
-                      
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                    </p>
+                ))}
                 </div>
-                <div class="flex items-center justify-center h-24 rounded bg-gray-50">
-                    <p class="text-2xl text-gray-400">
-                    <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                    </svg>
-                    </p>
+                <div className="mt-20 flex justify-center">
+                    <Pagination />
                 </div>
             </div>
-            
         </div>
-        </div>
-        </>
-    );
-  }
+    )
+}
 
 export default Home;

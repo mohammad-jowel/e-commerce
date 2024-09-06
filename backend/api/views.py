@@ -80,17 +80,24 @@ def logout(request):
         return Response(status=status.HTTP_205_RESET_CONTENT)
     except Exception as e:
         return Response(status=status.HTTP_400_BAD_REQUEST)
-    
-
-@api_view(['GET'])
-def home(request):
-    users = User.objects.all()
-    print(request.user.is_authenticated)
-    return Response([user.serialize() for user in users])
 
 
 @api_view(['GET'])
 def get_products(request):
     products = Product.objects.all()
-    products = [p.serialze() for p in products]
-    return Response(products, status=status.HTTP_200_OK)
+    cart_items = Cart.objects.filter(user=request.user).values_list('item_id', flat=True)
+    serialized_products = []
+    for product in products:
+        p = product.serialize()
+        p["cart"] = product.id in cart_items
+        serialized_products.append(p)
+    return Response(serialized_products, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_to_cart(request):
+    product_id = request.data['product_id']
+    product = Product.objects.get(pk=product_id)
+    cart = Cart(user=request.user, item=product)
+    cart.save()
+    return Response("Product has been added to cart", status=status.HTTP_201_CREATED)

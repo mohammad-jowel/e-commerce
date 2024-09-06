@@ -38,13 +38,15 @@ class Product(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
     item = models.ForeignKey('Product', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def serialize(self):
         return {
             "id": self.id,
-            "item": self.item.name,
+            "quantity": self.quantity,
+            "item": {"name": self.item.name, "price": self.item.price},
             "created_at": self.created_at,
         }
 

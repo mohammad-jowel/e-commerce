@@ -22,8 +22,8 @@ export const ShopProvider = ({ children }) => {
     const get_products = () => {
         axios.get('http://localhost:8000/api/get_products', {
             headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authTokens.access}`
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens.access}`
             }
         })
         .then(response => {
@@ -37,24 +37,20 @@ export const ShopProvider = ({ children }) => {
     }
 
 
-    const addToCart = (productId) => {
-        setProducts(prevProducts =>
-            prevProducts.map(product =>
-            product.id === productId ? { ...product, cart: true } : product
-            )
-        );
-        axios.post('http://localhost:8000/api/add_to_cart', {
-            "product_id": productId
+    const UpdateCart = (productId) => {
+        axios.post('http://localhost:8000/api/update_cart', {
+                "product_id": productId
             }, {
             headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authTokens.access}`
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens.access}`
             }})
             .then(response => {
-            console.log(response.data);
+                console.log(response.data);
+                getCart();
             })
             .catch(error => {
-            console.log(error);
+                console.log(error);
             });
     }
 
@@ -76,7 +72,7 @@ export const ShopProvider = ({ children }) => {
     }
 
   return (
-    <ShopContext.Provider value={{ products, addToCart, cart, getCart }}>
+    <ShopContext.Provider value={{ products, UpdateCart, cart, getCart }}>
       {loading ? null : children}
     </ShopContext.Provider>
   );

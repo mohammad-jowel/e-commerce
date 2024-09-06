@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 from .models import User, Product, Cart
 
 from django.contrib.auth import authenticate
@@ -86,22 +87,24 @@ def logout(request):
 @permission_classes([IsAuthenticated])
 def get_products(request):
     products = Product.objects.all().order_by('-id')
-    cart_items = Cart.objects.filter(user=request.user).values_list('item_id', flat=True)
-    serialized_products = []
-    for product in products:
-        p = product.serialize()
-        p["cart"] = product.id in cart_items
-        serialized_products.append(p)
-    return Response(serialized_products, status=status.HTTP_200_OK)
+    products = [product.serialize() for product in products]
+    return Response(products, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def add_to_cart(request):
+def update_cart(request):
     product_id = request.data['product_id']
-    product = Product.objects.get(pk=product_id)
-    cart = Cart(user=request.user, item=product)
-    cart.save()
+    product = get_object_or_404(Product, pk=product_id)
+    cart, created = Cart.objects.get_or_create(
+        user=request.user,
+        item=product,
+        defaults={'quantity': 1}
+    )
+    
+    if not created:
+        cart.quantity += 1
+        cart.save()
     return Response("Product has been added to cart", status=status.HTTP_201_CREATED)
 
 
@@ -109,5 +112,5 @@ def add_to_cart(request):
 @permission_classes([IsAuthenticated])
 def get_cart(request):
     cart = Cart.objects.filter(user=request.user).order_by('-id')
-    cart = [c.item.serialize() for c in cart]
+    cart = [c.serialize() for c in cart]
     return Response(cart, status=status.HTTP_200_OK)

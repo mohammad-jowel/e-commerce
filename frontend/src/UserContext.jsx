@@ -48,7 +48,6 @@ export const UserProvider = ({ children }) => {
     .then(function (response) {
       const data = response.data; 
 
-      console.log(data);
       setAuthTokens(data);
       localStorage.removeItem('Tokens');
       localStorage.setItem('Tokens', JSON.stringify(data));
@@ -72,7 +71,6 @@ export const UserProvider = ({ children }) => {
             setAuthTokens(data);
             setUser(jwtDecode(data.access));
 
-            console.log(data);
             localStorage.removeItem('Tokens');
             localStorage.setItem('Tokens', JSON.stringify(data));
         })
@@ -89,7 +87,6 @@ export const UserProvider = ({ children }) => {
         .then(function (response) {
             const data = response.data;
 
-            console.log(data);
             setAuthTokens(data);
             setUser(jwtDecode(data.access));
             localStorage.removeItem('Tokens');

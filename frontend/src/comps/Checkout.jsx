@@ -17,9 +17,10 @@ const Checkout = () => {
 
     useEffect(() => {
         if (cart === false){
-            getCart()
+            getCart();
         }
     }, [cart])
+
 
     return (
         <div className="flex justify-center p-2 md:p-4 min-h-screen">
@@ -29,7 +30,7 @@ const Checkout = () => {
                     <div className="w-full md:w-3/4 md:pr-6">
                         <div className="space-y-4">
                             {[
-                                { name: "Recliner Chair Steel", price: "€299.00", img: "https://placehold.co/100x100?text=Recliner+Chair+Steel" },
+                                { name: "Laptop", price: "€299.00", img: "https://placehold.co/100x100?text=Recliner+Chair+Steel" },
                                 { name: "Gaming Chair", price: "€249.00", img: "https://placehold.co/100x100?text=Gaming+Chair" },
                                 { name: "Timber Ride Padded", price: "€59.00", img: "https://placehold.co/100x100?text=Timber+Ride+Padded" },
                                 { name: "Isolated Wooden Rock", price: "€165.00", img: "https://placehold.co/100x100?text=Isolated+Wooden+Rock" },

@@ -7,7 +7,7 @@ import Pagination from './Pagination';
 const Home = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
-    const { products, addToCart } = useContext(ShopContext);
+    const { products, UpdateCart } = useContext(ShopContext);
 
     useEffect(() => {
         if (!user) {
@@ -41,11 +41,8 @@ const Home = () => {
                          {product.description}
                         </p>
                         <button 
-                            type="button" 
-                            disabled={product.cart}
-                            onClick={() => addToCart(product.id)}
-                            className="flex items-center mt-2 w-full text-white focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 bg-gray-900 hover:bg-gray-800 hover:text-gray-300 border-gray-700 disabled:bg-gray-800 disabled:text-gray-300"
-                        >
+                            type="button" onClick={() => UpdateCart(product.id)}
+                            className="flex items-center mt-2 w-full text-white focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 bg-gray-900 hover:bg-gray-800 hover:text-gray-300 border-gray-700 disabled:bg-gray-800 disabled:text-gray-300">
                             <div className="mx-auto flex items-center space-x-2">
                                 <svg className="size-5" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
                                     <g>
@@ -55,9 +52,7 @@ const Home = () => {
                                         <path fill="none" stroke="#ffff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M11.3279,15.4096v-6.515c0-3.1066,2.5184-5.625,5.625-5.625h0c3.1066,0,5.625,2.5184,5.625,5.625v6.515"></path>
                                     </g>
                                 </svg>
-                                <span>
-                                    {product.cart ? 'Added to cart' : 'Add to cart'}
-                                </span>
+                                <span>Add to cart</span>
                             </div>
                         </button>
                     </div>

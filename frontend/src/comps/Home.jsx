@@ -1,66 +1,28 @@
-import { useState, useEffect, useContext } from 'react';
-import axios from "axios";
+import { useEffect, useContext } from 'react';
 import { UserContext } from '../UserContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { ShopContext } from '../ShopContext';
+import { useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
 
 const Home = () => {
     const navigate = useNavigate();
-    const { authTokens, user } = useContext(UserContext);
-    const [products, setProducts] = useState([]);
+    const { user } = useContext(UserContext);
+    const { products, addToCart } = useContext(ShopContext);
 
     useEffect(() => {
         if (!user) {
             navigate('login');
-        } else {
-            getProducts();
         }
     }, []);
-    
-    const getProducts = () => {
-      axios.get('http://localhost:8000/api/get_products', {
-        headers: {
-           'Content-Type': 'application/json',
-           'Authorization': `Bearer ${authTokens.access}`
-        }})
-        .then(response => {
-          console.log(response.data);
-          setProducts(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-
-    const addToCart = (productId) => {
-        setProducts(prevProducts =>
-            prevProducts.map(product =>
-              product.id === productId ? { ...product, cart: true } : product
-            )
-        );
-        axios.post('http://localhost:8000/api/add_to_cart', {
-            "product_id": productId
-            }, {
-            headers: {
-               'Content-Type': 'application/json',
-               'Authorization': `Bearer ${authTokens.access}`
-            }})
-            .then(response => {
-              console.log(response.data);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-    }
 
     return (
         <div className="flex">
             <div className="hidden md:block w-1/5 p-4 md:pl-10 md:pt-7">
                 <ul className="space-y-2 font-medium">
                     <li>
-                        <Link to="/" className="flex items-center p-2 text-gray-950 rounded-md hover:bg-slate-900 hover:text-gray-100 group">
+                        <a herf="/" className="flex items-center p-2 text-gray-950 rounded-md hover:bg-slate-900 hover:text-gray-100 group">
                         <span className="flex-1 ms-3 whitespace-nowrap">Products</span>
-                        </Link>
+                        </a>
                     </li>
                 </ul>
             </div>

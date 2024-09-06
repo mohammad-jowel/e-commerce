@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from './UserContext';
+import { ShopProvider } from "./ShopContext";
 
 import Layout from './comps/Layout';
 import Home from './comps/Home';
@@ -11,18 +12,20 @@ import Nopage from "./comps/Nopage";
 const App = () => {
   return (
     <UserProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="singup" element={<Signup />} />
-          <Route path="login" element={<Login />} />
-          
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="*" element={<Nopage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ShopProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="singup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="*" element={<Nopage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ShopProvider>
     </UserProvider>
   );
 }

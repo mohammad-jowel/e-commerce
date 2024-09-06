@@ -83,8 +83,9 @@ def logout(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_products(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('-id')
     cart_items = Cart.objects.filter(user=request.user).values_list('item_id', flat=True)
     serialized_products = []
     for product in products:
@@ -92,6 +93,7 @@ def get_products(request):
         p["cart"] = product.id in cart_items
         serialized_products.append(p)
     return Response(serialized_products, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -101,3 +103,11 @@ def add_to_cart(request):
     cart = Cart(user=request.user, item=product)
     cart.save()
     return Response("Product has been added to cart", status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_cart(request):
+    cart = Cart.objects.filter(user=request.user).order_by('-id')
+    cart = [c.item.serialize() for c in cart]
+    return Response(cart, status=status.HTTP_200_OK)

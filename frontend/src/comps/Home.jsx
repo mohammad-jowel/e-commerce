@@ -1,29 +1,47 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../UserContext';
 import { ShopContext } from '../ShopContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Pagination from './Pagination';
 
 const Home = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
-    const { products, UpdateCart } = useContext(ShopContext);
+    const { products, AddToCart } = useContext(ShopContext);
+    const [catagories, setCatagories] = useState(null)
 
     useEffect(() => {
         if (!user) {
             navigate('login');
+        } else {
+            get_catagories();
         }
-    }, []);
+    }, [user]);
+
+    const get_catagories = () => {
+        axios.get('http://localhost:8000/api/get_catagories')
+        .then(response => {
+            setCatagories(response.data)
+        })
+        .catch(error => {
+            console.error('Error fetching catagories:', error);
+        });
+    }
+
 
     return (
         <div className="flex">
             <div className="hidden md:block w-1/5 p-4 md:pl-10 md:pt-7">
                 <ul className="space-y-2 font-medium">
-                    <li>
-                        <a herf="/" className="flex items-center p-2 text-gray-950 rounded-md hover:bg-slate-900 hover:text-gray-100 group">
-                        <span className="flex-1 ms-3 whitespace-nowrap">Products</span>
-                        </a>
+                    {catagories && catagories.map((c, i) => (
+                    <li key={i}>
+                        <div herf="/" className="flex items-center p-2 text-gray-950 rounded-md hover:bg-slate-900 hover:text-gray-100 group">
+                        <span className="flex-1 ms-3 whitespace-nowrap">{c}</span>
+                        </div>
                     </li>
+                    ))}
+                    
                 </ul>
             </div>
             <div className="border-l w-full p-4 pt-7">
@@ -41,7 +59,7 @@ const Home = () => {
                          {product.description}
                         </p>
                         <button 
-                            type="button" onClick={() => UpdateCart(product.id)}
+                            type="button" onClick={() =>    AddToCart(product.id)}
                             className="flex items-center mt-2 w-full text-white focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 bg-gray-900 hover:bg-gray-800 hover:text-gray-300 border-gray-700 disabled:bg-gray-800 disabled:text-gray-300">
                             <div className="mx-auto flex items-center space-x-2">
                                 <svg className="size-5" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">

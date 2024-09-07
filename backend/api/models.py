@@ -1,23 +1,36 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=150, unique=True, null=True, blank=True)
+    email = models.EmailField(_("email address"), unique=True)
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        unique=True,
+        null=True,
+        blank=True,
+    )
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     def __str__(self):
         return self.email
     
+class Catragoty(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=2, decimal_places=2 )
+    catragoty = models.ForeignKey(Catragoty, on_delete=models.CASCADE, blank=True)
     stock = models.PositiveIntegerField()
     image_url = models.URLField(max_length=200, blank=True)
 
@@ -46,8 +59,11 @@ class Cart(models.Model):
         return {
             "id": self.id,
             "quantity": self.quantity,
-            "item": {"name": self.item.name, "price": self.item.price},
-            "created_at": self.created_at,
+            "item_id": self.item.id,
+            "name": self.item.name, 
+            "price": self.item.price,
+            "image_url": self.item.image_url,
+            "created_at": self.created_at
         }
 
     def __str__(self):

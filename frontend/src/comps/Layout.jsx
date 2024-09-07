@@ -46,6 +46,11 @@ const Layout = () => {
                 <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-6 lg:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
                 <li>
                     <Link to="/" onClick={toggleNav} className="block py-2 items-center text-gray-900 hover:text-gray-600">
+                    Home
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/" onClick={toggleNav} className="block py-2 items-center text-gray-900 hover:text-gray-600">
                     Products
                     </Link>
                 </li>
@@ -78,7 +83,7 @@ const Layout = () => {
                 {user?
                 <>
                 <Link to="/checkout" className="block py-2 items-center text-gray-800 hover:text-">
-                <svg className="size-8" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
+                <svg className="size-7" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
                     <g>
                     <path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M25.8716,28.9377H8.0341c-1.0475,0-1.9292-0.7839-2.0519-1.8242L4.3781,13.7176
                     c-0.1448-1.2284,0.8149-2.308,2.0519-2.308h21.0458c1.237,0,2.1967,1.0796,2.0519,2.308l-1.6042,13.3959

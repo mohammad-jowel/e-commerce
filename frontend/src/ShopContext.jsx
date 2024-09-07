@@ -37,8 +37,8 @@ export const ShopProvider = ({ children }) => {
     }
 
 
-    const UpdateCart = (productId) => {
-        axios.post('http://localhost:8000/api/update_cart', {
+    const AddToCart = (productId) => {
+        axios.post('http://localhost:8000/api/add_to_cart', {
                 "product_id": productId
             }, {
             headers: {
@@ -71,8 +71,27 @@ export const ShopProvider = ({ children }) => {
         });
     }
 
+    
+    const RemoveFromCart = (productId) => {
+        axios.post('http://localhost:8000/api/remove_from_cart', {
+                "product_id": productId
+            }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authTokens.access}`
+            }})
+            .then(response => {
+                console.log(response.data);
+                getCart();
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+
   return (
-    <ShopContext.Provider value={{ products, UpdateCart, cart, getCart }}>
+    <ShopContext.Provider value={{ products, AddToCart, cart, getCart, RemoveFromCart }}>
       {loading ? null : children}
     </ShopContext.Provider>
   );

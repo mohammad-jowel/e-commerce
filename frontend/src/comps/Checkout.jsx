@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Checkout = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
-    const { cart, getCart } = useContext(ShopContext);
+    const { cart, getCart, AddToCart, RemoveFromCart } = useContext(ShopContext);
 
     useEffect(() => {
         if (!user) {
@@ -29,25 +29,23 @@ const Checkout = () => {
                 <div className="flex flex-col md:flex-row">
                     <div className="w-full md:w-3/4 md:pr-6">
                         <div className="space-y-4">
-                            {[
-                                { name: "Laptop", price: "€299.00", img: "https://placehold.co/100x100?text=Recliner+Chair+Steel" },
-                                { name: "Gaming Chair", price: "€249.00", img: "https://placehold.co/100x100?text=Gaming+Chair" },
-                                { name: "Timber Ride Padded", price: "€59.00", img: "https://placehold.co/100x100?text=Timber+Ride+Padded" },
-                                { name: "Isolated Wooden Rock", price: "€165.00", img: "https://placehold.co/100x100?text=Isolated+Wooden+Rock" },
-                                { name: "Colored Wooden Chair", price: "€299.00", img: "https://placehold.co/100x100?text=Colored+Wooden+Chair" }
-                            ].map((item, index) => (
+                            {cart !=false && cart.items.map((item, index) => (
                                 <div key={index} className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
                                     <div className="flex items-center">
                                         <div className="flex items-center border border-gray-300 rounded-lg">
-                                            <button className="px-2 py-1">-</button>
-                                            <span className="px-4">1</span>
-                                            <button className="px-2 py-1">+</button>
+
+                                            <button onClick={() => RemoveFromCart(item.item_id)}
+                                            className="px-2 py-1 hover:bg-gray-300">-</button>
+                                            <span className="px-4">{item.quantity}</span>
+                                            <button onClick={() => AddToCart(item.item_id)}
+                                            className="px-2 py-1  hover:bg-gray-200">+</button>
+
                                         </div>
-                                        <img src={item.img} alt={item.name} className="w-16 h-16 ml-4 rounded-lg" />
+                                        <img src={item.image_url} alt={item.name} className="w-16 h-16 ml-4 rounded-lg" />
                                         <span className="ml-4 font-medium">{item.name}</span>
                                     </div>
                                     <div className="flex items-center">
-                                        <span className="font-medium">{item.price}</span>
+                                        <span className="font-medium">€{item.price}</span>
                                         <button className="ml-4 text-gray-400 hover:text-gray-600">
                                             <i className="fas fa-times"></i>
                                         </button>
@@ -61,7 +59,7 @@ const Checkout = () => {
                         <div className="bg-gray-50 p-4 rounded-lg shadow-md">
                             <div className="flex justify-between mb-2">
                                 <span>Subtotal</span>
-                                <span>€ 1071.00</span>
+                                <span>€ {cart && cart.total}</span>
                             </div>
                             <div className="flex justify-between mb-2">
                                 <span>Shipping</span>
@@ -73,7 +71,7 @@ const Checkout = () => {
                             </div>
                             <div className="flex justify-between font-bold text-lg mb-4">
                                 <span>Total</span>
-                                <span>€ 1071.00</span>
+                                <span>€ {cart && cart.total}</span>
                             </div>
                             <button className="w-full bg-black text-white py-2 rounded-md">GO TO CHECKOUT</button>
                         </div>

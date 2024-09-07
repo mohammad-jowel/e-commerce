@@ -5,7 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .models import User, Product, Cart
+from .models import User, Product, Cart, Catragoty
 
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -90,10 +90,16 @@ def get_products(request):
     products = [product.serialize() for product in products]
     return Response(products, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_catagories(request):
+    catrgories = Catragoty.objects.all()
+    catrgories = [catagory.name for catagory in catrgories]
+    return Response(catrgories, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def update_cart(request):
+def add_to_cart(request):
     product_id = request.data['product_id']
     product = get_object_or_404(Product, pk=product_id)
     cart, created = Cart.objects.get_or_create(
@@ -108,9 +114,27 @@ def update_cart(request):
     return Response("Product has been added to cart", status=status.HTTP_201_CREATED)
 
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_cart(request):
     cart = Cart.objects.filter(user=request.user).order_by('-id')
-    cart = [c.serialize() for c in cart]
-    return Response(cart, status=status.HTTP_200_OK)
+    serialized_cart = {"total": 0, "items": []}
+    for cart in cart:
+        serialized_cart["total"] += cart.quantity * cart.item.price
+        serialized_cart["items"].append(cart.serialize())
+    return Response(serialized_cart, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def remove_from_cart(request):
+    product_id = request.data['product_id']
+    product = get_object_or_404(Product, pk=product_id)
+    cart = get_object_or_404(Cart, user=request.user, item=product)
+    if cart.quantity > 1 :
+        cart.quantity -= 1
+        cart.save()
+    elif cart.quantity == 1:
+        cart.delete()
+    return Response("Product has been removed from cart", status=status.HTTP_201_CREATED)

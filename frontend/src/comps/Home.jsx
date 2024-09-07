@@ -61,14 +61,14 @@ const Home = () => {
                     <li  className="w-full">
                         <button 
                         onClick={() => filterProducts("all")}
-                        className={`w-full p-2 text-gray-950 ${currCategory === "all" && "bg-slate-900 text-gray-100" } rounded-md hover:bg-slate-900 hover:text-gray-100 group`}>
+                        className={`w-full p-2 ${currCategory != "all" ? "text-gray-950" : "bg-slate-900 text-gray-100" } rounded-md hover:bg-slate-900 hover:text-gray-100 group`}>
                             All
                         </button>
                     </li>
                     {categories && categories.map((c, i) => (
                     <li key={i} className="w-full">
                         <button onClick={() => filterProducts(c)}
-                        className={`w-full p-2 text-gray-950 ${currCategory === c && "bg-slate-900 text-gray-100" } rounded-md hover:bg-slate-900 hover:text-gray-100 group`}>
+                        className={`w-full p-2 ${currCategory === c && "bg-slate-900 text-gray-100" } rounded-md hover:bg-slate-900 hover:text-gray-100 group`}>
                             {c}
                         </button>
                     </li>

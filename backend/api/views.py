@@ -91,9 +91,9 @@ def get_products(request):
     return Response(products, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def get_catagories(request):
+def get_categories(request):
     catrgories = Catragoty.objects.all()
-    catrgories = [catagory.name for catagory in catrgories]
+    catrgories = [category.name for category in catrgories]
     return Response(catrgories, status=status.HTTP_200_OK)
 
 

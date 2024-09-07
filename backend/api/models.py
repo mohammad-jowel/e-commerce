@@ -30,7 +30,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=2, decimal_places=2 )
-    catragoty = models.ForeignKey(Catragoty, on_delete=models.CASCADE, blank=True)
+    category = models.ForeignKey(Catragoty, on_delete=models.CASCADE, blank=True)
     stock = models.PositiveIntegerField()
     image_url = models.URLField(max_length=200, blank=True)
 
@@ -39,6 +39,7 @@ class Product(models.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
+            "category":self.category.name,
             "price": self.price,
             "old_price": self.price / (1 - self.discount),
             "discount": self.discount * 100,

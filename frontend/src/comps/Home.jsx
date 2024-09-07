@@ -9,36 +9,68 @@ const Home = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const { products, AddToCart } = useContext(ShopContext);
-    const [catagories, setCatagories] = useState(null)
+    const [categories, setcategories] = useState(null);
+    const [currProducts, setCurrProducts] = useState();
+    const [currCategory, setCurrCategory] = useState("all");
+    const [currCartBtn, setCurrCartBtn] = useState();
+
 
     useEffect(() => {
         if (!user) {
             navigate('login');
         } else {
-            get_catagories();
+            setCurrProducts(products);
+            get_categories();
         }
     }, [user]);
 
-    const get_catagories = () => {
-        axios.get('http://localhost:8000/api/get_catagories')
+    const get_categories = () => {
+        axios.get('http://localhost:8000/api/get_categories')
         .then(response => {
-            setCatagories(response.data)
+            setcategories(response.data)
         })
         .catch(error => {
-            console.error('Error fetching catagories:', error);
+            console.error('Error fetching categories:', error);
         });
     }
 
+    const filterProducts = (categoryName) => {
+        if (categoryName === "all") {
+            setCurrCategory("all");
+            setCurrProducts(products);
+        } else {
+            setCurrCategory(categoryName);
+            const filtered = products.filter(product => product.category === categoryName);
+            setCurrProducts(filtered);
+        }
+    };
+
+    const HandleCartBtn= (productId) => {
+        AddToCart(productId);
+        setCurrCartBtn(productId);
+        setTimeout(() => {
+            setCurrCartBtn("");
+        }, 900)
+    }
 
     return (
-        <div className="flex">
+        <>
+        <div className="flex min-h-dvh">
             <div className="hidden md:block w-1/5 p-4 md:pl-10 md:pt-7">
                 <ul className="space-y-2 font-medium">
-                    {catagories && catagories.map((c, i) => (
-                    <li key={i}>
-                        <div herf="/" className="flex items-center p-2 text-gray-950 rounded-md hover:bg-slate-900 hover:text-gray-100 group">
-                        <span className="flex-1 ms-3 whitespace-nowrap">{c}</span>
-                        </div>
+                    <li  className="w-full">
+                        <button 
+                        onClick={() => filterProducts("all")}
+                        className={`w-full p-2 text-gray-950 ${currCategory === "all" && "bg-slate-900 text-gray-100" } rounded-md hover:bg-slate-900 hover:text-gray-100 group`}>
+                            All
+                        </button>
+                    </li>
+                    {categories && categories.map((c, i) => (
+                    <li key={i} className="w-full">
+                        <button onClick={() => filterProducts(c)}
+                        className={`w-full p-2 text-gray-950 ${currCategory === c && "bg-slate-900 text-gray-100" } rounded-md hover:bg-slate-900 hover:text-gray-100 group`}>
+                            {c}
+                        </button>
                     </li>
                     ))}
                     
@@ -46,7 +78,7 @@ const Home = () => {
             </div>
             <div className="border-l w-full p-4 pt-7">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:grid-cols-4 lg:gap-6">
-                {products.map((product) => (
+                {currProducts && currProducts.map((product) => (
                     <div key={product.id} className="border p-4 rounded-lg">
                         <img src={product.image_url} alt={product.name} className="w-full object-cover mb-4"/>
                         <h2 className="text-lg font-bold">{product.name}</h2>
@@ -58,8 +90,8 @@ const Home = () => {
                         <p className="text-sm text-gray-500 mb-4">
                          {product.description}
                         </p>
-                        <button 
-                            type="button" onClick={() =>    AddToCart(product.id)}
+                        <button disabled = {currCartBtn == product.id}
+                            type="button" onClick={() =>    HandleCartBtn(product.id)}
                             className="flex items-center mt-2 w-full text-white focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 bg-gray-900 hover:bg-gray-800 hover:text-gray-300 border-gray-700 disabled:bg-gray-800 disabled:text-gray-300">
                             <div className="mx-auto flex items-center space-x-2">
                                 <svg className="size-5" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
@@ -70,17 +102,26 @@ const Home = () => {
                                         <path fill="none" stroke="#ffff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="M11.3279,15.4096v-6.515c0-3.1066,2.5184-5.625,5.625-5.625h0c3.1066,0,5.625,2.5184,5.625,5.625v6.515"></path>
                                     </g>
                                 </svg>
+                                
+                                {currCartBtn === product.id ?
+                                <snap className="pl-2 text-md font-medium text-green-500">
+                                    Added to cart
+                                </snap> : 
                                 <span>Add to cart</span>
+                                }
                             </div>
                         </button>
+                        
                     </div>
                 ))}
                 </div>
-                <div className="mt-20 flex justify-center">
-                    <Pagination />
-                </div>
+                
             </div>
         </div>
+        <div className="pb-4 md:pb-6 flex justify-center">
+            <Pagination />
+        </div>
+        </>
     )
 }
 

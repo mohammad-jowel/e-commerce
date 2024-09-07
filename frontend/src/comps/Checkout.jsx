@@ -41,7 +41,7 @@ const Checkout = () => {
                                             className="px-2 py-1  hover:bg-gray-200">+</button>
 
                                         </div>
-                                        <img src={item.image_url} alt={item.name} className="w-16 h-16 ml-4 rounded-lg" />
+                                        <img src={item.image_url} alt={item.name} className="w-16 h-12 ml-4 rounded-lg" />
                                         <span className="ml-4 font-medium">{item.name}</span>
                                     </div>
                                     <div className="flex items-center">
@@ -73,7 +73,7 @@ const Checkout = () => {
                                 <span>Total</span>
                                 <span>€ {cart && cart.total}</span>
                             </div>
-                            <button className="w-full bg-black text-white py-2 rounded-md">GO TO CHECKOUT</button>
+                            <button className="w-full bg-black text-white py-2 rounded-md hover:text-gray-300">GO TO CHECKOUT</button>
                         </div>
                     </div>
                 </div>

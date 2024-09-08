@@ -4,11 +4,11 @@ import { UserContext } from '../UserContext';
 
 
 const Signup = () => {
-    const { user, SingUp } = useContext(UserContext);
+    const { user, SignUp } = useContext(UserContext);
     const navigate = useNavigate();
     useEffect(() => {
         if(user){
-            navigate('/')
+            navigate('/');
         }
     }, [user])
 
@@ -48,7 +48,7 @@ const Signup = () => {
             'password': password
         };
 
-        SingUp(userInfo);
+        SignUp(userInfo);
     };
 
     return(

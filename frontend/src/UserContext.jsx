@@ -62,7 +62,7 @@ export const UserProvider = ({ children }) => {
     })
   };
 
-  const signup = (userInfo) => {
+  const SignUp = (userInfo) => {
     axios.post('http://localhost:8000/api/signup', userInfo, {
             headers: { 'Content-Type': 'application/json' },
         })
@@ -121,7 +121,7 @@ export const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{ authTokens, user, signup, LogIn, LogOut }}>
+    <UserContext.Provider value={{ authTokens, user, SignUp, LogIn, LogOut }}>
       {loading ? null : children}
     </UserContext.Provider>
   );

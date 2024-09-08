@@ -15,7 +15,7 @@ const App = () => {
       <ShopProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="singup" element={<Signup />} />
+            <Route path="signup" element={<Signup />} />
             <Route path="login" element={<Login />} />
             
             <Route path="/" element={<Layout />}>

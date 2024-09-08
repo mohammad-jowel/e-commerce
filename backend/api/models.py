@@ -30,7 +30,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     regular_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    discount = models.IntegerField(max_length=10, null=True, blank=True)
+    discount = models.IntegerField(null=True, blank=True)
     category = models.ForeignKey(Catragoty, on_delete=models.CASCADE, blank=True)
     stock = models.PositiveIntegerField()
     image_url = models.URLField(max_length=200, blank=True)

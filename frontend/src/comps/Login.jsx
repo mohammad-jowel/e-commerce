@@ -77,7 +77,7 @@ const Login = () => {
                 Sign in with Apple
             </button>
         </div>
-        <p className="text-center font-medium text-gray-800 mt-6">Don't have an account? <a href="/singup" className="text-blue-500">Sing Up</a></p>
+        <p className="text-center font-medium text-gray-800 mt-6">Don't have an account? <a href="/signup" className="text-blue-500">Sign Up</a></p>
         </div>
         </div>
         <div className="w-1/2 bg-cover bg-center hidden md:block" style={{ backgroundImage: 'url("./hero.png")' }}>

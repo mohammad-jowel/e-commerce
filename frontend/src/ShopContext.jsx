@@ -63,7 +63,6 @@ export const ShopProvider = ({ children }) => {
             }
         })
         .then(response => {
-            console.log(response.data);
             setCart(response.data);
         })
         .catch(error => {

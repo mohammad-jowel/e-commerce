@@ -70,8 +70,8 @@ const Layout = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/singup" onClick={toggleNav} className="block py-2 items-center text-gray-900 hover:text-gray-600">
-                        Singup
+                        <Link to="/signup" onClick={toggleNav} className="block py-2 items-center text-gray-900 hover:text-gray-600">
+                        Signup
                         </Link>
                     </li>
                     </>

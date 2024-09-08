@@ -22,7 +22,7 @@ const Home = () => {
             setCurrProducts(products);
             get_categories();
         }
-    }, [user]);
+    }, [user, products]);
 
     const get_categories = () => {
         axios.get('http://localhost:8000/api/get_categories')

@@ -37,7 +37,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def singup(request):
+def signup(request):
     first_name = request.data['first_name']
     last_name = request.data['last_name']
     email = request.data['email']

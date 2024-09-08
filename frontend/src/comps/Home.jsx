@@ -80,19 +80,25 @@ const Home = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:grid-cols-4 lg:gap-6">
                 {currProducts && currProducts.map((product) => (
                     <div key={product.id} className="border p-4 rounded-lg">
-                        <img src={product.image_url} alt={product.name} className="w-full object-cover mb-4"/>
+                        <div className="flex justify-center">
+                            <img src={product.image_url} alt={product.name} className="h-24 object-cover mb-4"/>
+                        </div>
                         <h2 className="text-lg font-bold">{product.name}</h2>
                         <div className="text-lg font-bold flex space-x-2">
                             <p className="text-slate-900">€{product.price}</p>
-                            <span className="line-through text-gray-500">€{product.old_price}</span> 
-                            <span className="text-red-500">{product.discount}% OFF</span>
+                            {product.regular_price && 
+                                <span className="line-through text-gray-500">€{product.regular_price}</span> 
+                            }
+                            {product.discount && 
+                                <span className="text-red-500">{product.discount}% OFF</span>
+                            }
                         </div>
                         <p className="text-sm text-gray-500 mb-4">
-                         {product.description}
+                         {product.description.substring(0,120) + ".."}
                         </p>
                         <button disabled = {currCartBtn == product.id}
                             type="button" onClick={() =>    HandleCartBtn(product.id)}
-                            className="flex items-center mt-2 w-full text-white focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 bg-gray-900 hover:bg-gray-800 hover:text-gray-300 border-gray-700 disabled:bg-gray-800 disabled:text-gray-300">
+                            className="flex items-center mt-5 w-full text-white focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 me-2 mb-2 bg-gray-900 hover:bg-gray-800 hover:text-gray-300 border-gray-700 disabled:bg-gray-800 disabled:text-gray-300">
                             <div className="mx-auto flex items-center space-x-2">
                                 <svg className="size-5" xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="shopping-bag">
                                     <g>

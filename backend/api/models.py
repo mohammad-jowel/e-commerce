@@ -29,7 +29,8 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.DecimalField(max_digits=2, decimal_places=2 )
+    regular_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    discount = models.IntegerField(max_length=10, null=True, blank=True)
     category = models.ForeignKey(Catragoty, on_delete=models.CASCADE, blank=True)
     stock = models.PositiveIntegerField()
     image_url = models.URLField(max_length=200, blank=True)
@@ -41,8 +42,8 @@ class Product(models.Model):
             "description": self.description,
             "category":self.category.name,
             "price": self.price,
-            "old_price": self.price / (1 - self.discount),
-            "discount": self.discount * 100,
+            "regular_price": self.regular_price,
+            "discount": self.discount,
             "stock": self.stock,
             "image_url": self.image_url,
         }

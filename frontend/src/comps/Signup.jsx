@@ -56,7 +56,7 @@ const Signup = () => {
         <div className="min-h-lvh w-screen md:w-1/2 flex items-center justify-center bg-white">
         <div className="bg-gray-100 p-8 rounded-lg shadow-md w-full max-w-xl">
         <h1 className="text-center text-2xl font-medium">Welcome To</h1>
-        <h2 className="text-center text-3xl font-bold mt-2">Furni<span className="text-blue-500">Flex</span></h2>
+        <h2 className="text-center text-3xl font-bold mt-2">Apple <span className="text-blue-500">Store</span></h2>
         <p className="text-center text-gray-600 mt-2">Signup for purchase your desire products</p>
         <form className="mt-6" onSubmit={handleSubmit}>
             <div className="flex space-x-4">
@@ -120,14 +120,13 @@ const Signup = () => {
             <div className="flex items-center justify-center h-full bg-black bg-opacity-50">
                 <div className="text-center text-white">
                     <div className="flex items-center justify-center mb-4">
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center">
-                        <svg width="89" height="85" viewBox="0 0 89 85" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="89" height="85" rx="42" fill="#1E99F5"/>
-                            <path d="M39.7793 39.959L41.0273 38.5527H42.8906L45.1055 27.3555C42.7031 27.3555 40.752 28.0059 39.252 29.3066C37.7637 30.5957 37.0195 32.2832 37.0195 34.3691L37.0371 34.7559L33.6094 36.4082C33.9141 32.8105 35.3086 30.1738 37.793 28.498C40.2891 26.8223 44.0508 25.9844 49.0781 25.9844H59.2207L57.6387 30.959H56.5137C56.666 30.4902 56.7422 30.0273 56.7422 29.5703C56.7422 28.0469 54.3457 27.2852 49.5527 27.2852H48.7969L46.5645 38.5527H54.2285L52.4883 40.3457C50.6133 40.0879 48.832 39.959 47.1445 39.959H46.2832L45.2637 45.1094C44.4082 49.4453 42.75 52.9082 40.2891 55.498C37.8398 58.0879 34.9863 59.3828 31.7285 59.3828C29.9707 59.3828 28.4004 58.7207 27.0176 57.3965L29.6016 54.7598C30.5273 56.6816 32.0156 57.6426 34.0664 57.6426C35.9414 57.6426 37.4121 56.793 38.4785 55.0938C39.5566 53.4062 40.5234 50.4121 41.3789 46.1113L42.6094 39.959H39.7793Z" fill="black"/>
+                        <div className="rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 48 48">
+                            <path fill="#42A5F5" d="M40.084,32.613c-0.848,1.835-1.254,2.655-2.342,4.274c-1.521,2.264-3.67,5.089-6.326,5.109c-2.361,0.018-2.971-1.507-6.176-1.482c-3.204,0.016-3.872,1.51-6.237,1.484c-2.654-0.022-4.688-2.568-6.21-4.826c-4.259-6.34-4.707-13.768-2.076-17.721c1.861-2.803,4.807-4.449,7.572-4.449c2.817,0,4.588,1.514,6.916,1.514c2.262,0,3.638-1.517,6.896-1.517c2.464,0,5.07,1.313,6.931,3.575C32.942,21.836,33.931,30.337,40.084,32.613z"></path><path fill="#42A5F5" d="M30.046,12.072c1.269-1.577,2.232-3.804,1.882-6.072c-2.069,0.138-4.491,1.418-5.905,3.075c-1.282,1.51-2.345,3.752-1.931,5.922C26.351,15.066,28.689,13.764,30.046,12.072z"></path><path fill="#1E88E5" d="M36.736,20.421C28,30.001,20,21.001,9.228,27.842c0.375,3.027,1.53,6.303,3.565,9.331c1.521,2.258,3.556,4.804,6.21,4.826c2.365,0.025,3.033-1.469,6.237-1.484c3.205-0.024,3.814,1.5,6.176,1.482c2.656-0.021,4.805-2.846,6.326-5.109c1.088-1.619,1.494-2.439,2.342-4.274C34.878,30.688,33.389,24.314,36.736,20.421z"></path>
                         </svg>
                         </div>
                     </div>
-                    <h2 className="text-3xl font-bold mb-4">Furni<span className="text-blue-500">Flex</span></h2>
+                    <h2 className="text-3xl font-bold mb-4">Apple <span className="text-blue-500">Store</span></h2>
                     <p className="text-gray-300 px-4 lg:px-20">Discover a seamless shopping experience with our curated collection of products. From fashion to electronics, we bring quality.</p>
                 </div>
             </div>

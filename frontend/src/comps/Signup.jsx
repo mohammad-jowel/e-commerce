@@ -116,8 +116,8 @@ const Signup = () => {
         <p className="text-center font-medium text-gray-800 mt-6">Have an account? <a href="/login" className="text-blue-500">Login</a></p>
         </div>
         </div>
-        <div className="w-1/2 bg-cover bg-center hidden md:block" style={{ backgroundImage: 'url("./hero.png")' }}>
-            <div className="flex items-center justify-center h-full bg-black bg-opacity-50">
+        <div className="w-1/2 bg-cover bg-center hidden md:block" style={{ backgroundImage: 'url("./hero.jpg")' }}>
+            <div className="flex items-center justify-center h-full bg-black bg-opacity-65">
                 <div className="text-center text-white">
                     <div className="flex items-center justify-center mb-4">
                         <div className="rounded-full flex items-center justify-center">

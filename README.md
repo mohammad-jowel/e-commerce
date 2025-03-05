@@ -23,7 +23,7 @@ Getting Started
 
 *   Python 3.x
 *   Node.js
-*   npm or yarn
+*   npm
 
 ### Installation
 
@@ -63,18 +63,10 @@ Frontend (React)
     ```
     npm install
     ```
-    or
-    ```
-    yarn install
-    ```
     
 3.  **Start the React development server**:
     ```
-    npm start
-    ```
-    or
-    ```
-    yarn start
+    npm run dev
     ```
     
 
@@ -83,7 +75,7 @@ Usage
 
 1.  **Access the application**:
     *   Backend: `http://localhost:8000`
-    *   Frontend: `http://localhost:3000`
+    *   Frontend: `http://localhost:5173`
 2.  **Sign up or log in** to start using the application.
 3.  **Browse products** and add them to your cart.
 4.  **Manage your cart** by adding or removing items.
